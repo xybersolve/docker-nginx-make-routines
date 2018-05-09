@@ -1,0 +1,23 @@
+FROM ubuntu
+MAINTAINER Greg Milligan <xybersolve@gmail.com>
+
+# Install Nginx
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ raring main universe" >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y nano wget dialog net-tools
+RUN apt-get install -y nginx
+
+# Remove the default Nginx configuration file
+RUN rm -v /etc/nginx/nginx.conf
+
+# Copy a configuration file from the current directory
+ADD ./default.conf /etc/nginx/
+
+# Append "daemon off;" to the configuration
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+
+# Expose ports
+EXPOSE 80
+
+# Start service
+CMD service nginx start
