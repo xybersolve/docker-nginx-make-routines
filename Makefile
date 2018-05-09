@@ -1,4 +1,4 @@
-.PHONY: machine build run stop clean delete local vanilla files conf open ssh
+.PHONY: machine build run stop clean delete local vanilla files conf ip open ssh
 
 file := Dockerfile.conf
 image := mynginx
@@ -47,6 +47,9 @@ conf:
 		-v ~/docker/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf \
 		-d \
 		nginx
+
+ip:
+	@echo $(ip)
 
 open:
 	#open http://$(shell docker-machine active)
