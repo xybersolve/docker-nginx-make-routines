@@ -9,6 +9,9 @@ ip := $(shell docker-machine ip $(host))
 machine:
 	@eval $(shell docker-machine env $(host))
 
+ip:
+	@echo $(ip)
+
 build:
 	@docker build -t $(image) -f $(file) .
 
@@ -16,7 +19,7 @@ run: build
 	@docker run --name $(container) -p 8080:80 -d $(image)
 
 stop:
-	@docker kill $(container)
+	@docker stop $(container)
 
 clean: stop
 	@docker rm $(container)
@@ -47,9 +50,6 @@ conf:
 		-v ~/docker/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf \
 		-d \
 		nginx
-
-ip:
-	@echo $(ip)
 
 open:
 	#open http://$(shell docker-machine active)
